@@ -1,0 +1,26 @@
+﻿@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Hosting
+@inject IHttpContextAccessor context
+@inject IWebHostEnvironment HostingEnvironment
+
+@{
+    var urlRoot = $"{context.HttpContext?.Request.Scheme}://{context.HttpContext?.Request.Host}{Url.Content("~")}";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+
+    <h1>@HostingEnvironment.ApplicationName</h1>
+    <p>@urlRoot</p>
+
+    <div>
+        @RenderBody()
+    </div>
+</body>
+</html>
