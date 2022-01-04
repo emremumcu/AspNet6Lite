@@ -15,9 +15,14 @@ namespace AspNet6Lite.AppData
 
                 AppDbContext context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
                 
-                // context.Database.EnsureCreated();
-                
-                await context.Database.MigrateAsync(); // Migrations must be created before running this command!
+                if(context.Database.GetPendingMigrations().Any())
+                {
+                    await context.Database.MigrateAsync();
+                }
+                else
+                {
+                    context.Database.EnsureCreated(); 
+                } 
 
                 if (!context.Countries.Any()) PopulateSampleData(context);
             }
