@@ -9,7 +9,7 @@ namespace AspNet6Lite.AppData.Configuration
         public void Configure(EntityTypeBuilder<LogEntity> builder)
         {
             builder.ToTable("Logs");
-            builder.HasKey(k => k.Id);
+            // builder.HasKey(k => k.Id);
             builder.HasIndex(k => k.Guid).IsUnique(true);
             builder.Property(p => p.LogType).IsRequired(true);
             builder.Property(p => p.LogMessage).IsRequired(true);
