@@ -33,12 +33,20 @@ namespace AspNet6Lite.AppData
 
                 foreach (var entityType in modelBuilder.Model.GetEntityTypes())
                 {
-                    var properties = entityType.ClrType.GetProperties().Where(p => p.Name == "Created" && p.PropertyType == typeof(DateTime));
-
-                    foreach (var property in properties)
+                    // Base entity Id property:
+                    var propertiesId = entityType.ClrType.GetProperties()
+                        .Where(p => p.Name == "Id" && p.PropertyType == typeof(int));
+                    foreach (var property in propertiesId)
                     {
-                        modelBuilder.Entity(entityType.Name).Property(property.Name).HasDefaultValueSql(defaultCurrentDateSql);
+                        modelBuilder.Entity(entityType.Name).HasKey(property.Name);
+                        modelBuilder.Entity(entityType.Name).Property(property.Name).ValueGeneratedOnAdd().IsRequired(true);
                     }
+
+                    // Base entity Created property:
+                    var propertiesCreated = entityType.ClrType.GetProperties()
+                        .Where(p => p.Name == "Created" && p.PropertyType == typeof(DateTime));
+                    foreach (var property in propertiesCreated) 
+                        modelBuilder.Entity(entityType.Name).Property(property.Name).HasDefaultValueSql(defaultCurrentDateSql).IsRequired(true);
                 }
             }
         }
