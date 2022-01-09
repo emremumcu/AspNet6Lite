@@ -36,7 +36,7 @@ var app = builder.Build();
 //    .AddCommandLine(args)
 //    .Build();
 
-await AspNet6Lite.AppData.DataGenerator.Generate(app.Services);
+// await AspNet6Lite.AppData.DataGenerator.Generate(app.Services);
 
 app.UseRouting();
 
